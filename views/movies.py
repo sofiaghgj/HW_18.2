@@ -8,7 +8,14 @@ movie_ns = Namespace('movie')
 @movie_ns.route('/')
 class MoviesViews(Resource):
     def get(self):
-        name = movie_service.get_all()
+        filters = {}
+        if director_id := request.args.get('director_id'):
+            filters['director_id'] = director_id
+        if genre_id := request.args.get('genre_id'):
+            filters['genre_id'] = genre_id
+        if year := request.args.get('year'):
+            filters['year'] = year
+        name = movie_service.get_all(filters=filters)
         return MovieSchema(many=True).dump(name)
 
     def post(self):

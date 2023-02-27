@@ -8,7 +8,7 @@ class MovieDAO:
     def get_one(self, mid):
         return self.session.query(Movie).get(mid)
 
-    def get_all(self):
+    def get_all(self,filters=None):
         return self.session.query(Movie).all()
 
     def create(self, data):
